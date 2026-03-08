@@ -1,4 +1,4 @@
-import { execSync } from "child_process";
+import { execFileSync } from "child_process";
 import { logger } from "@nx/devkit";
 import { resolveOxfmtBinary } from "./resolve-oxfmt";
 import { buildOxfmtArgs, BaseOxfmtOptions } from "./normalize-options";
@@ -13,12 +13,11 @@ export function runOxfmt(params: RunOxfmtParams): { success: boolean } {
   const { options, projectRoot, workspaceRoot } = params;
   const oxfmtBin = resolveOxfmtBinary(workspaceRoot);
   const args = buildOxfmtArgs(options, projectRoot, workspaceRoot);
-  const command = `${oxfmtBin} ${args.join(" ")}`;
 
-  logger.info(`Running: ${command}`);
+  logger.info(`Running: ${oxfmtBin} ${args.join(" ")}`);
 
   try {
-    execSync(command, {
+    execFileSync(oxfmtBin, args, {
       cwd: workspaceRoot,
       stdio: "inherit",
     });

@@ -4,7 +4,7 @@ import * as childProcess from "child_process";
 
 vi.mock("child_process", async () => {
   const actual = await vi.importActual<typeof import("child_process")>("child_process");
-  return { ...actual, execSync: vi.fn() };
+  return { ...actual, execFileSync: vi.fn() };
 });
 
 vi.mock("./resolve-oxfmt", () => ({
@@ -16,22 +16,23 @@ describe("runOxfmt", () => {
     vi.clearAllMocks();
   });
 
-  it("should run oxfmt and return success", () => {
+  it("should run oxfmt with execFileSync and return success", () => {
     const result = runOxfmt({
       options: {},
       projectRoot: "/workspace/apps/my-app",
       workspaceRoot: "/workspace",
     });
 
-    expect(childProcess.execSync).toHaveBeenCalledWith(
-      expect.stringContaining("/usr/local/bin/oxfmt"),
+    expect(childProcess.execFileSync).toHaveBeenCalledWith(
+      "/usr/local/bin/oxfmt",
+      ["/workspace/apps/my-app"],
       expect.objectContaining({ cwd: "/workspace", stdio: "inherit" }),
     );
     expect(result.success).toBe(true);
   });
 
-  it("should return failure when execSync throws", () => {
-    vi.mocked(childProcess.execSync).mockImplementation(() => {
+  it("should return failure when execFileSync throws", () => {
+    vi.mocked(childProcess.execFileSync).mockImplementation(() => {
       throw new Error("failed");
     });
 
@@ -51,8 +52,9 @@ describe("runOxfmt", () => {
       workspaceRoot: "/workspace",
     });
 
-    expect(childProcess.execSync).toHaveBeenCalledWith(
-      expect.stringContaining("--check"),
+    expect(childProcess.execFileSync).toHaveBeenCalledWith(
+      "/usr/local/bin/oxfmt",
+      expect.arrayContaining(["--check"]),
       expect.anything(),
     );
   });
