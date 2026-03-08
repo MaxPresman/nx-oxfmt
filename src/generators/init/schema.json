@@ -13,7 +13,8 @@
     "migratePrettier": {
       "type": "boolean",
       "default": false,
-      "description": "Migrate existing Prettier configuration to oxfmt"
+      "description": "Migrate existing Prettier configuration to oxfmt",
+      "x-priority": "important"
     },
     "oxfmtVersion": {
       "type": "string",

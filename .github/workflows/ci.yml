@@ -29,8 +29,8 @@ jobs:
       - name: Install dependencies
         run: npm install --no-audit --no-fund
 
-      - name: Type check
-        run: npx tsc --noEmit
+      - name: Build
+        run: npm run build
 
       - name: Lint
         run: npm run lint

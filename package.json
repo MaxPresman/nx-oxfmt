@@ -10,10 +10,18 @@
     "oxfmt"
   ],
   "license": "MIT",
-  "main": "./src/index.js",
-  "types": "./src/index.d.ts",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": "./dist/src/index.js",
+    "./plugin": "./dist/plugin.js",
+    "./package.json": "./package.json",
+    "./generators.json": "./generators.json",
+    "./executors.json": "./executors.json",
+    "./migrations.json": "./migrations.json"
+  },
   "scripts": {
-    "build": "tsc",
+    "build": "tsup && cp -r src/generators/init/files dist/src/generators/init/files",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "lint": "oxlint src/",
@@ -31,6 +39,7 @@
     "@vitest/coverage-v8": "^4.0.18",
     "oxfmt": "latest",
     "oxlint": "latest",
+    "tsup": "^8.5.1",
     "typescript": "^5.4.0",
     "vitest": "^4.0.18"
   },
@@ -39,5 +48,8 @@
     "oxfmt": ">=0.30.0"
   },
   "executors": "./executors.json",
-  "generators": "./generators.json"
+  "generators": "./generators.json",
+  "nx-migrations": {
+    "migrations": "./migrations.json"
+  }
 }
