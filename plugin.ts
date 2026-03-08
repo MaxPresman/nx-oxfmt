@@ -13,7 +13,7 @@ export interface OxfmtPluginOptions {
   checkTargetName?: string;
 }
 
-const JS_TS_EXTENSIONS = new Set([
+const FORMATTABLE_EXTENSIONS = new Set([
   ".js",
   ".jsx",
   ".ts",
@@ -36,16 +36,23 @@ const JS_TS_EXTENSIONS = new Set([
   ".graphql",
 ]);
 
-function hasFormattableFiles(dir: string): boolean {
+const MAX_SCAN_DEPTH = 10;
+
+function hasFormattableFiles(dir: string, depth = 0): boolean {
+  if (depth > MAX_SCAN_DEPTH) return false;
+
   try {
     const entries = readdirSync(dir, { withFileTypes: true });
     for (const entry of entries) {
-      if (entry.name === "node_modules") continue;
+      if (entry.name === "node_modules" || entry.name === ".git") continue;
+
+      if (entry.isSymbolicLink()) continue;
+
       if (entry.isDirectory()) {
-        if (hasFormattableFiles(join(dir, entry.name))) return true;
+        if (hasFormattableFiles(join(dir, entry.name), depth + 1)) return true;
       } else {
         const ext = entry.name.slice(entry.name.lastIndexOf("."));
-        if (JS_TS_EXTENSIONS.has(ext)) return true;
+        if (FORMATTABLE_EXTENSIONS.has(ext)) return true;
       }
     }
   } catch {

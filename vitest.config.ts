@@ -4,10 +4,10 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "node",
-    include: ["src/**/*.spec.ts"],
+    include: ["src/**/*.spec.ts", "plugin.spec.ts"],
     coverage: {
       provider: "v8",
-      include: ["src/**/*.ts"],
+      include: ["src/**/*.ts", "plugin.ts"],
       exclude: ["src/**/*.spec.ts", "src/**/*.d.ts", "src/index.ts"],
       thresholds: {
         lines: 100,
