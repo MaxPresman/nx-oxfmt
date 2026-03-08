@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "version": 2,
+  "title": "Oxfmt Format Executor",
+  "description": "Format files using oxfmt",
+  "type": "object",
+  "properties": {
+    "patterns": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Glob patterns of files to format (relative to project root). Defaults to the entire project."
+    },
+    "config": {
+      "type": "string",
+      "description": "Path to .oxfmtrc.json config file (relative to workspace root)."
+    },
+    "noErrorOnUnmatchedPattern": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do not error when no files match the given patterns."
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,14 @@
+{
+  "executors": {
+    "format": {
+      "implementation": "./src/executors/format/executor",
+      "schema": "./src/executors/format/schema.json",
+      "description": "Format files using oxfmt"
+    },
+    "check": {
+      "implementation": "./src/executors/check/executor",
+      "schema": "./src/executors/check/schema.json",
+      "description": "Check formatting using oxfmt (fails on unformatted files)"
+    }
+  }
+}

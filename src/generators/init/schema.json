@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "cli": "nx",
+  "title": "Initialize Oxfmt",
+  "description": "Initialize oxfmt in the workspace",
+  "type": "object",
+  "properties": {
+    "skipInstall": {
+      "type": "boolean",
+      "default": false,
+      "description": "Skip installing the oxfmt package"
+    },
+    "migratePrettier": {
+      "type": "boolean",
+      "default": false,
+      "description": "Migrate existing Prettier configuration to oxfmt"
+    },
+    "oxfmtVersion": {
+      "type": "string",
+      "default": "latest",
+      "description": "Version of oxfmt to install"
+    }
+  },
+  "additionalProperties": false
+}
