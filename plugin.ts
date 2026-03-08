@@ -95,6 +95,9 @@ function createNodesInternal(
     options: {},
     cache: false,
     inputs: sharedInputs,
+    metadata: {
+      description: "Format files using oxfmt",
+    },
   };
 
   const checkTarget: TargetConfiguration = {
@@ -102,6 +105,9 @@ function createNodesInternal(
     options: {},
     cache: true,
     inputs: sharedInputs,
+    metadata: {
+      description: "Check formatting using oxfmt",
+    },
   };
 
   return {
@@ -131,3 +137,7 @@ export const createNodesV2: CreateNodesV2<OxfmtPluginOptions> = [
     );
   },
 ];
+
+// Nx 23+ compatibility — createNodesV2 export name is being deprecated
+// in favor of createNodes with v2 signature
+export const createNodes = createNodesV2;

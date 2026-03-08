@@ -1,6 +1,7 @@
 {
   "$schema": "https://json-schema.org/schema",
   "version": 2,
+  "cli": "nx",
   "title": "Oxfmt Check Executor",
   "description": "Check file formatting using oxfmt (exits non-zero if files are unformatted)",
   "type": "object",
@@ -8,7 +9,8 @@
     "patterns": {
       "type": "array",
       "items": { "type": "string" },
-      "description": "Glob patterns of files to check (relative to project root). Defaults to the entire project."
+      "description": "Glob patterns of files to check (relative to project root). Defaults to the entire project.",
+      "x-priority": "important"
     },
     "config": {
       "type": "string",

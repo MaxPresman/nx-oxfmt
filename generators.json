@@ -1,7 +1,7 @@
 {
   "generators": {
     "init": {
-      "factory": "./src/generators/init/generator",
+      "factory": "./dist/src/generators/init/generator",
       "schema": "./src/generators/init/schema.json",
       "description": "Initialize oxfmt in the workspace"
     }
