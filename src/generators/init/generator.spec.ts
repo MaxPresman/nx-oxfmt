@@ -60,4 +60,21 @@ describe('init generator', () => {
       expect.anything()
     );
   });
+
+  it('should warn when prettier migration fails', async () => {
+    const { execSync } = await import('child_process');
+    vi.mocked(execSync).mockImplementation(() => {
+      throw new Error('migration failed');
+    });
+
+    // Should not throw
+    await initGenerator(tree, { migratePrettier: true });
+  });
+
+  it('should use specified oxfmtVersion', async () => {
+    await initGenerator(tree, { oxfmtVersion: '0.35.0' });
+
+    const packageJson = readJson(tree, 'package.json');
+    expect(packageJson.devDependencies['oxfmt']).toBe('0.35.0');
+  });
 });

@@ -49,4 +49,21 @@ describe('checkExecutor', () => {
     const result = await checkExecutor({}, mockContext);
     expect(result.success).toBe(false);
   });
+
+  it('should throw when no project name is provided', async () => {
+    const ctx = { ...mockContext, projectName: undefined } as ExecutorContext;
+    await expect(checkExecutor({}, ctx)).rejects.toThrow(
+      'No project name provided'
+    );
+  });
+
+  it('should throw when project config is not found', async () => {
+    const ctx = {
+      ...mockContext,
+      projectName: 'unknown',
+    } as ExecutorContext;
+    await expect(checkExecutor({}, ctx)).rejects.toThrow(
+      'Could not find project configuration for unknown'
+    );
+  });
 });
