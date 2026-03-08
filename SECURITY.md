@@ -13,7 +13,7 @@ If you discover a security vulnerability in nx-oxfmt, please report it responsib
 
 **Do not open a public issue.**
 
-Instead, email **security@maxpresman.com** with:
+Instead, email **security@mx.cm** with:
 
 - A description of the vulnerability
 - Steps to reproduce
