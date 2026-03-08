@@ -1,22 +1,22 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ExecutorContext } from '@nx/devkit';
-import { checkExecutor } from './executor';
-import * as runOxfmtModule from '../../utils/run-oxfmt';
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { ExecutorContext } from "@nx/devkit";
+import { checkExecutor } from "./executor";
+import * as runOxfmtModule from "../../utils/run-oxfmt";
 
-vi.mock('../../utils/run-oxfmt');
+vi.mock("../../utils/run-oxfmt");
 
 const mockRunOxfmt = vi.mocked(runOxfmtModule.runOxfmt);
 
 const mockContext = {
-  root: '/workspace',
-  cwd: '/workspace',
+  root: "/workspace",
+  cwd: "/workspace",
   isVerbose: false,
-  projectName: 'my-app',
+  projectName: "my-app",
   projectsConfigurations: {
     version: 2,
     projects: {
-      'my-app': {
-        root: 'apps/my-app',
+      "my-app": {
+        root: "apps/my-app",
         targets: {},
       },
     },
@@ -25,45 +25,43 @@ const mockContext = {
   projectGraph: { nodes: {}, dependencies: {} },
 } as ExecutorContext;
 
-describe('checkExecutor', () => {
+describe("checkExecutor", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it('should call runOxfmt with check: true', async () => {
+  it("should call runOxfmt with check: true", async () => {
     mockRunOxfmt.mockReturnValue({ success: true });
 
     const result = await checkExecutor({}, mockContext);
 
     expect(mockRunOxfmt).toHaveBeenCalledWith({
       options: { check: true },
-      projectRoot: '/workspace/apps/my-app',
-      workspaceRoot: '/workspace',
+      projectRoot: "/workspace/apps/my-app",
+      workspaceRoot: "/workspace",
     });
     expect(result.success).toBe(true);
   });
 
-  it('should return failure when files are unformatted', async () => {
+  it("should return failure when files are unformatted", async () => {
     mockRunOxfmt.mockReturnValue({ success: false });
 
     const result = await checkExecutor({}, mockContext);
     expect(result.success).toBe(false);
   });
 
-  it('should throw when no project name is provided', async () => {
+  it("should throw when no project name is provided", async () => {
     const ctx = { ...mockContext, projectName: undefined } as ExecutorContext;
-    await expect(checkExecutor({}, ctx)).rejects.toThrow(
-      'No project name provided'
-    );
+    await expect(checkExecutor({}, ctx)).rejects.toThrow("No project name provided");
   });
 
-  it('should throw when project config is not found', async () => {
+  it("should throw when project config is not found", async () => {
     const ctx = {
       ...mockContext,
-      projectName: 'unknown',
+      projectName: "unknown",
     } as ExecutorContext;
     await expect(checkExecutor({}, ctx)).rejects.toThrow(
-      'Could not find project configuration for unknown'
+      "Could not find project configuration for unknown",
     );
   });
 });

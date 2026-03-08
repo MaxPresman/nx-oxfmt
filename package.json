@@ -2,36 +2,16 @@
   "name": "nx-oxfmt",
   "version": "0.1.0",
   "description": "Nx plugin for oxfmt - the high-performance Rust-powered code formatter",
-  "main": "./src/index.js",
-  "types": "./src/index.d.ts",
-  "generators": "./generators.json",
-  "executors": "./executors.json",
   "keywords": [
+    "formatter",
     "nx",
     "nx-plugin",
-    "oxfmt",
-    "formatter",
-    "oxc"
+    "oxc",
+    "oxfmt"
   ],
   "license": "MIT",
-  "dependencies": {
-    "@nx/devkit": "^20.0.0",
-    "tslib": "^2.6.0"
-  },
-  "peerDependencies": {
-    "nx": ">=20.0.0",
-    "oxfmt": ">=0.30.0"
-  },
-  "devDependencies": {
-    "@nx/js": "^20.0.0",
-    "@nx/plugin": "^20.0.0",
-    "@types/node": "^20.0.0",
-    "oxfmt": "latest",
-    "oxlint": "latest",
-    "typescript": "^5.4.0",
-    "vitest": "^4.0.18",
-    "@vitest/coverage-v8": "^4.0.18"
-  },
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
@@ -39,5 +19,25 @@
     "lint": "oxlint src/",
     "format": "oxfmt",
     "format:check": "oxfmt --check"
-  }
+  },
+  "dependencies": {
+    "@nx/devkit": "^20.0.0",
+    "tslib": "^2.6.0"
+  },
+  "devDependencies": {
+    "@nx/js": "^20.0.0",
+    "@nx/plugin": "^20.0.0",
+    "@types/node": "^20.0.0",
+    "@vitest/coverage-v8": "^4.0.18",
+    "oxfmt": "latest",
+    "oxlint": "latest",
+    "typescript": "^5.4.0",
+    "vitest": "^4.0.18"
+  },
+  "peerDependencies": {
+    "nx": ">=20.0.0",
+    "oxfmt": ">=0.30.0"
+  },
+  "executors": "./executors.json",
+  "generators": "./generators.json"
 }

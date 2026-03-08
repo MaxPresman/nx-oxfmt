@@ -26,6 +26,7 @@ nx g nx-oxfmt:init
 ```
 
 This will:
+
 1. Add `oxfmt` as a dev dependency
 2. Create a `.oxfmtrc.json` config file
 
@@ -58,11 +59,11 @@ nx run-many -t format-check
 
 ## Executor Options
 
-| Option | Type | Default | Description |
-|---|---|---|---|
-| `patterns` | `string[]` | — | Glob patterns relative to project root |
-| `config` | `string` | — | Path to `.oxfmtrc.json` relative to workspace root |
-| `noErrorOnUnmatchedPattern` | `boolean` | `false` | Don't error on unmatched globs |
+| Option                      | Type       | Default | Description                                        |
+| --------------------------- | ---------- | ------- | -------------------------------------------------- |
+| `patterns`                  | `string[]` | —       | Glob patterns relative to project root             |
+| `config`                    | `string`   | —       | Path to `.oxfmtrc.json` relative to workspace root |
+| `noErrorOnUnmatchedPattern` | `boolean`  | `false` | Don't error on unmatched globs                     |
 
 ## Automatic Target Inference
 

@@ -1,19 +1,18 @@
-import { ExecutorContext, logger } from '@nx/devkit';
-import { join } from 'path';
-import { CheckExecutorSchema } from './schema';
-import { runOxfmt } from '../../utils/run-oxfmt';
+import { ExecutorContext, logger } from "@nx/devkit";
+import { join } from "path";
+import { CheckExecutorSchema } from "./schema";
+import { runOxfmt } from "../../utils/run-oxfmt";
 
 export async function checkExecutor(
   options: CheckExecutorSchema,
-  context: ExecutorContext
+  context: ExecutorContext,
 ): Promise<{ success: boolean }> {
   const projectName = context.projectName;
   if (!projectName) {
-    throw new Error('No project name provided');
+    throw new Error("No project name provided");
   }
 
-  const projectConfig =
-    context.projectsConfigurations?.projects[projectName];
+  const projectConfig = context.projectsConfigurations?.projects[projectName];
   if (!projectConfig) {
     throw new Error(`Could not find project configuration for ${projectName}`);
   }
@@ -28,9 +27,9 @@ export async function checkExecutor(
   });
 
   if (result.success) {
-    logger.info('oxfmt check passed — all files are formatted');
+    logger.info("oxfmt check passed — all files are formatted");
   } else {
-    logger.error('oxfmt check failed — some files are not formatted');
+    logger.error("oxfmt check failed — some files are not formatted");
   }
 
   return result;
