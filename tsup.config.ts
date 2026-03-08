@@ -1,4 +1,5 @@
 import { defineConfig } from "tsup";
+import { cpSync } from "fs";
 
 export default defineConfig({
   entry: [
@@ -19,4 +20,9 @@ export default defineConfig({
   outDir: "dist",
   target: "es2021",
   external: ["@nx/devkit", "nx", "tslib"],
+  async onSuccess() {
+    // Copy generator template files alongside compiled output so that
+    // generateFiles(tree, join(__dirname, 'files'), ...) resolves correctly at runtime.
+    cpSync("src/generators/init/files", "dist/src/generators/init/files", { recursive: true });
+  },
 });
