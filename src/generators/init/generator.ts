@@ -1,15 +1,20 @@
 import {
   Tree,
   addDependenciesToPackageJson,
-  generateFiles,
   logger,
   formatFiles,
   readJson,
   writeJson,
 } from "@nx/devkit";
 import { execSync } from "child_process";
-import { join } from "path";
 import { InitGeneratorSchema } from "./schema";
+
+const DEFAULT_OXFMTRC =
+  JSON.stringify(
+    { printWidth: 100, singleQuote: true, trailingComma: "all", endOfLine: "lf" },
+    null,
+    2,
+  ) + "\n";
 
 function addPluginToNxJson(tree: Tree, formatTargetName: string, checkTargetName: string) {
   if (!tree.exists("nx.json")) return;
@@ -53,7 +58,7 @@ export async function initGenerator(tree: Tree, options: InitGeneratorSchema) {
 
   // Scaffold .oxfmtrc.json if it doesn't already exist
   if (!tree.exists(".oxfmtrc.json")) {
-    generateFiles(tree, join(__dirname, "files"), ".", {});
+    tree.write(".oxfmtrc.json", DEFAULT_OXFMTRC);
     logger.info("Created .oxfmtrc.json");
   } else {
     logger.info(".oxfmtrc.json already exists, skipping");

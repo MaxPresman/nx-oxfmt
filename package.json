@@ -21,7 +21,7 @@
     "./migrations.json": "./migrations.json"
   },
   "scripts": {
-    "build": "tsup && cp -r src/generators/init/files dist/src/generators/init/files",
+    "build": "tsup",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "lint": "oxlint src/",
