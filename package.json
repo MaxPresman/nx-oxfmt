@@ -1,6 +1,6 @@
 {
   "name": "nx-oxfmt",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Nx plugin for oxfmt - the high-performance Rust-powered code formatter",
   "keywords": [
     "formatter",

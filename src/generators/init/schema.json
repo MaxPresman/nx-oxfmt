@@ -19,6 +19,16 @@
       "type": "string",
       "default": "latest",
       "description": "Version of oxfmt to install"
+    },
+    "formatTargetName": {
+      "type": "string",
+      "default": "format",
+      "description": "Name of the format target"
+    },
+    "checkTargetName": {
+      "type": "string",
+      "default": "format-check",
+      "description": "Name of the format-check target"
     }
   },
   "additionalProperties": false

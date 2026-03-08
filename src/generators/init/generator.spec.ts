@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { createTreeWithEmptyWorkspace } from "@nx/devkit/testing";
-import { Tree, readJson } from "@nx/devkit";
+import { Tree, readJson, writeJson } from "@nx/devkit";
 import { initGenerator } from "./generator";
 
 vi.mock("child_process", async () => {
@@ -62,7 +62,6 @@ describe("init generator", () => {
       throw new Error("migration failed");
     });
 
-    // Should not throw
     await initGenerator(tree, { migratePrettier: true });
   });
 
@@ -71,5 +70,53 @@ describe("init generator", () => {
 
     const packageJson = readJson(tree, "package.json");
     expect(packageJson.devDependencies["oxfmt"]).toBe("0.35.0");
+  });
+
+  it("should register plugin in nx.json with defaults", async () => {
+    await initGenerator(tree, {});
+
+    const nxJson = readJson(tree, "nx.json");
+    expect(nxJson.plugins).toContain("nx-oxfmt/plugin");
+  });
+
+  it("should register plugin with custom target names", async () => {
+    await initGenerator(tree, { formatTargetName: "fmt", checkTargetName: "fmt-check" });
+
+    const nxJson = readJson(tree, "nx.json");
+    expect(nxJson.plugins).toContainEqual({
+      plugin: "nx-oxfmt/plugin",
+      options: { formatTargetName: "fmt", checkTargetName: "fmt-check" },
+    });
+  });
+
+  it("should not duplicate plugin registration", async () => {
+    await initGenerator(tree, {});
+    await initGenerator(tree, {});
+
+    const nxJson = readJson(tree, "nx.json");
+    const pluginEntries = nxJson.plugins.filter(
+      (p: string | { plugin: string }) =>
+        p === "nx-oxfmt/plugin" || (typeof p === "object" && p.plugin === "nx-oxfmt/plugin"),
+    );
+    expect(pluginEntries).toHaveLength(1);
+  });
+
+  it("should not duplicate when already registered as object", async () => {
+    const nxJson = readJson(tree, "nx.json");
+    nxJson.plugins = [{ plugin: "nx-oxfmt/plugin", options: {} }];
+    writeJson(tree, "nx.json", nxJson);
+
+    await initGenerator(tree, {});
+
+    const updated = readJson(tree, "nx.json");
+    expect(updated.plugins).toHaveLength(1);
+  });
+
+  it("should handle missing nx.json gracefully", async () => {
+    tree.delete("nx.json");
+
+    await initGenerator(tree, {});
+
+    expect(tree.exists("nx.json")).toBe(false);
   });
 });

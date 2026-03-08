@@ -18,6 +18,11 @@
       "type": "boolean",
       "default": false,
       "description": "Do not error when no files match the given patterns."
+    },
+    "additionalArgs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Additional CLI arguments to pass to oxfmt."
     }
   },
   "additionalProperties": false

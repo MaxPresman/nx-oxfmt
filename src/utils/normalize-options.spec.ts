@@ -35,4 +35,14 @@ describe("buildOxfmtArgs", () => {
     expect(args).toContain("/workspace/apps/my-app/src/**/*.ts");
     expect(args).toContain("/workspace/apps/my-app/lib/**/*.ts");
   });
+
+  it("should pass additional args", () => {
+    const args = buildOxfmtArgs(
+      { additionalArgs: ["--prose-wrap", "always"] },
+      projectRoot,
+      workspaceRoot,
+    );
+    expect(args).toContain("--prose-wrap");
+    expect(args).toContain("always");
+  });
 });

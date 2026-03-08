@@ -4,6 +4,7 @@ export interface BaseOxfmtOptions {
   patterns?: string[];
   config?: string;
   noErrorOnUnmatchedPattern?: boolean;
+  additionalArgs?: string[];
 }
 
 export function buildOxfmtArgs(
@@ -23,6 +24,10 @@ export function buildOxfmtArgs(
 
   if (options.noErrorOnUnmatchedPattern) {
     args.push("--no-error-on-unmatched-pattern");
+  }
+
+  if (options.additionalArgs) {
+    args.push(...options.additionalArgs);
   }
 
   // If patterns are provided use them, otherwise default to the project root
