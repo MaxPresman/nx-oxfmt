@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+.github/
+.gitignore
+CLAUDE.md
+*.spec.ts
+tsconfig.json
+tsconfig.spec.json
+vitest.config.ts
+jest.config.ts
+project.json
