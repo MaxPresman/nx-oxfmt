@@ -14,4 +14,3 @@ src/**/*.ts
 plugin.ts
 !src/**/*.d.ts
 !src/**/*.json
-!src/**/files/**
