@@ -7,7 +7,7 @@ import {
   readJson,
   writeJson,
 } from "@nx/devkit";
-import { execSync } from "child_process";
+import { execFileSync } from "child_process";
 import { join } from "path";
 import { InitGeneratorSchema } from "./schema";
 
@@ -68,7 +68,7 @@ export async function initGenerator(tree: Tree, options: InitGeneratorSchema) {
   if (options.migratePrettier) {
     logger.info("Migrating Prettier configuration to oxfmt...");
     try {
-      execSync("npx oxfmt --migrate prettier", {
+      execFileSync("npx", ["oxfmt", "--migrate", "prettier"], {
         stdio: "inherit",
       });
       logger.info("Prettier migration completed");

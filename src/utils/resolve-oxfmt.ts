@@ -1,4 +1,4 @@
-import { execSync } from "child_process";
+import { execFileSync } from "child_process";
 import { join } from "path";
 import { existsSync } from "fs";
 
@@ -13,7 +13,8 @@ export function resolveOxfmtBinary(workspaceRoot: string): string {
   }
 
   try {
-    const globalPath = execSync("which oxfmt", { encoding: "utf-8" }).trim();
+    const command = process.platform === "win32" ? "where" : "which";
+    const globalPath = execFileSync(command, ["oxfmt"], { encoding: "utf-8" }).trim();
     if (globalPath) {
       return globalPath;
     }

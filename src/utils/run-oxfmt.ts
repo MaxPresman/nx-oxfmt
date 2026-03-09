@@ -22,7 +22,10 @@ export function runOxfmt(params: RunOxfmtParams): { success: boolean } {
       stdio: "inherit",
     });
     return { success: true };
-  } catch {
+  } catch (e) {
+    if (e instanceof Error) {
+      logger.error(e.message);
+    }
     return { success: false };
   }
 }

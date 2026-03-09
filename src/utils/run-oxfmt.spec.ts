@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { runOxfmt } from "./run-oxfmt";
 import * as childProcess from "child_process";
+import { logger } from "@nx/devkit";
 
 vi.mock("child_process", async () => {
   const actual = await vi.importActual<typeof import("child_process")>("child_process");
@@ -31,9 +32,26 @@ describe("runOxfmt", () => {
     expect(result.success).toBe(true);
   });
 
-  it("should return failure when execFileSync throws", () => {
+  it("should return failure and log error when execFileSync throws", () => {
+    const errorSpy = vi.spyOn(logger, "error").mockImplementation(() => {});
     vi.mocked(childProcess.execFileSync).mockImplementation(() => {
-      throw new Error("failed");
+      throw new Error("oxfmt exited with code 1");
+    });
+
+    const result = runOxfmt({
+      options: {},
+      projectRoot: "/workspace/apps/my-app",
+      workspaceRoot: "/workspace",
+    });
+
+    expect(result.success).toBe(false);
+    expect(errorSpy).toHaveBeenCalledWith("oxfmt exited with code 1");
+    errorSpy.mockRestore();
+  });
+
+  it("should handle non-Error thrown values", () => {
+    vi.mocked(childProcess.execFileSync).mockImplementation(() => {
+      throw "string error";
     });
 
     const result = runOxfmt({

@@ -7,7 +7,7 @@ vi.mock("child_process", async () => {
   const actual = await vi.importActual<typeof import("child_process")>("child_process");
   return {
     ...actual,
-    execSync: vi.fn(() => Buffer.from("")),
+    execFileSync: vi.fn(() => Buffer.from("")),
   };
 });
 
@@ -49,16 +49,20 @@ describe("init generator", () => {
   });
 
   it("should call migrate when migratePrettier is true", async () => {
-    const { execSync } = await import("child_process");
+    const { execFileSync } = await import("child_process");
 
     await initGenerator(tree, { migratePrettier: true });
 
-    expect(execSync).toHaveBeenCalledWith("npx oxfmt --migrate prettier", expect.anything());
+    expect(execFileSync).toHaveBeenCalledWith(
+      "npx",
+      ["oxfmt", "--migrate", "prettier"],
+      expect.anything(),
+    );
   });
 
   it("should warn when prettier migration fails", async () => {
-    const { execSync } = await import("child_process");
-    vi.mocked(execSync).mockImplementation(() => {
+    const { execFileSync } = await import("child_process");
+    vi.mocked(execFileSync).mockImplementation(() => {
       throw new Error("migration failed");
     });
 

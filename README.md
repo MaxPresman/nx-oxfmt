@@ -4,6 +4,11 @@ Nx plugin for [oxfmt](https://oxc.rs/docs/guide/usage/formatter.html) — the hi
 
 [![CI](https://github.com/MaxPresman/nx-oxfmt/actions/workflows/ci.yml/badge.svg)](https://github.com/MaxPresman/nx-oxfmt/actions/workflows/ci.yml)
 
+## Prerequisites
+
+- **Nx** >= 20.0.0
+- **oxfmt** >= 0.30.0
+
 ## Features
 
 - **Format executor** — runs `oxfmt` to write formatted files
@@ -29,6 +34,7 @@ This will:
 
 1. Add `oxfmt` as a dev dependency
 2. Create a `.oxfmtrc.json` config file
+3. Register the plugin in `nx.json`
 
 To migrate from Prettier:
 
@@ -59,11 +65,14 @@ nx run-many -t format-check
 
 ## Executor Options
 
+Both `format` and `check` executors accept the same options:
+
 | Option                      | Type       | Default | Description                                        |
 | --------------------------- | ---------- | ------- | -------------------------------------------------- |
 | `patterns`                  | `string[]` | —       | Glob patterns relative to project root             |
 | `config`                    | `string`   | —       | Path to `.oxfmtrc.json` relative to workspace root |
 | `noErrorOnUnmatchedPattern` | `boolean`  | `false` | Don't error on unmatched globs                     |
+| `additionalArgs`            | `string[]` | —       | Additional CLI arguments to pass to oxfmt          |
 
 ## Automatic Target Inference
 
@@ -72,6 +81,22 @@ Register the plugin in your `nx.json` to automatically add `format` and `format-
 ```json
 {
   "plugins": ["nx-oxfmt/plugin"]
+}
+```
+
+Customize target names:
+
+```json
+{
+  "plugins": [
+    {
+      "plugin": "nx-oxfmt/plugin",
+      "options": {
+        "formatTargetName": "fmt",
+        "checkTargetName": "fmt-check"
+      }
+    }
+  ]
 }
 ```
 

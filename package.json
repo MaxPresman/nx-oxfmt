@@ -37,8 +37,9 @@
     "@nx/plugin": "^22.5.4",
     "@types/node": "^22.0.0",
     "@vitest/coverage-v8": "^4.0.18",
-    "oxfmt": "latest",
-    "oxlint": "latest",
+    "memfs": "^4.56.11",
+    "oxfmt": "^0.36.0",
+    "oxlint": "^1.51.0",
     "tsup": "^8.5.1",
     "typescript": "^5.4.0",
     "vitest": "^4.0.18"
