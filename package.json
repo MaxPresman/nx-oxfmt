@@ -10,6 +10,17 @@
     "oxfmt"
   ],
   "license": "MIT",
+  "files": [
+    "dist",
+    "executors.json",
+    "generators.json",
+    "migrations.json",
+    "src/**/*.json",
+    "src/**/*.d.ts",
+    "src/**/files/**",
+    "README.md",
+    "LICENSE"
+  ],
   "main": "./dist/src/index.js",
   "types": "./dist/src/index.d.ts",
   "exports": {
