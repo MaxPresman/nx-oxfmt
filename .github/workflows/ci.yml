@@ -40,3 +40,6 @@ jobs:
 
       - name: Test with coverage
         run: npm run test:coverage
+
+      - name: Audit production dependencies
+        run: npm audit --audit-level=high --omit=dev

@@ -24,6 +24,6 @@ You can expect an initial response within 48 hours. We will work with you to und
 ## Security Practices
 
 - All user-provided options are passed via `execFileSync` argument arrays (no shell interpolation)
-- CI enforces `npm audit` with 0 vulnerabilities
+- CI runs `npm audit --audit-level=high` on production dependencies
 - Dependencies are kept up to date and audited regularly
 - GitHub Actions workflows use least-privilege `permissions: contents: read`
